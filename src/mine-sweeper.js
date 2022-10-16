@@ -26,24 +26,35 @@ const { NotImplementedError } = require('../extensions/index.js');
 function minesweeper(matrix) {
   // throw new NotImplementedError('Not implemented');
   // remove line with error and write your code here
-	const sweeper = JSON.parse(JSON.stringify(matrix));
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[0].length; j++) {
-      sweeper[i][j] = 0;
-    }
-  }
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[0].length; j++) {
-      if (matrix[i][j] === true) {
-        let arr = [[i-1,j-1],[i-1,j],[i-1,j+1],[i,j-1],[i,j+1],[i+1,j-1],[i+1,j],[i+1,j+1]];
-        for (el of arr) {
-          if(el[0] >= 0 && el[0] <= matrix.length && el[1] >= 0 && el[1] <= matrix[0].length) {
-            sweeper[el[0]][el[1]]++;
-          }
-        }
-      }
-    }
-	}
+	const resultMatrix = matrix.map((e) => e.map((_) => 0));
+	for (let i = 0; i < matrix.length; i++) {
+		 const formulas = ([i, k]) => [
+			 [i - 1, k - 1],
+			 [i - 1, k],
+			 [i - 1, k + 1],
+			 [i, k - 1],
+			 [i, k + 1],
+			 [i + 1, k - 1],
+			 [i + 1, k],
+			 [i + 1, k + 1],
+		 ];
+		 for (let k = 0; k < matrix[i].length; k++) {
+			 if (matrix[i][k]) {
+				 const res = formulas([i, k]);
+				 for (let l = 0; l < 8; l++) {
+					 if (
+						 res[l][0] >= 0 &&
+						 res[l][1] >= 0 &&
+						 res[l][0] < matrix.length &&
+						 res[l][1] < matrix[i].length
+					 ) {
+						 resultMatrix[res[l][0]][res[l][1]]++;
+					 }
+				 }
+			 }
+		 }
+	 } 
+	 return resultMatrix;
 }
 
 module.exports = {
