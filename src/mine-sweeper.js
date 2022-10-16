@@ -27,13 +27,11 @@ function minesweeper(matrix) {
   // throw new NotImplementedError('Not implemented');
   // remove line with error and write your code here
 	const sweeper = JSON.parse(JSON.stringify(matrix));
-
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[0].length; j++) {
       sweeper[i][j] = 0;
     }
   }
-  
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[0].length; j++) {
       if (matrix[i][j] === true) {
